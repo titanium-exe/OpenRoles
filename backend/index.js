@@ -1,11 +1,21 @@
-import express from express 
+import cookieParser from "cookie-parser";
+import express from "express";
+import cors from "cors";
+
 const app = express();
 
 // middleware 
 app.use(express.json());
+app.use(express.urlencoded({exteded: true}));
 
+app.use(cookieParser());
+const corsOptions = {
+  origin: 'https://localhost:5173',
+  credentials:true,
+}
+app.use(cors(corsOptions));
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, ()=>{
   console.log(`server running at port ${PORT}`);
