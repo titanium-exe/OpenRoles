@@ -73,8 +73,6 @@ export const login = async (req, res) => {
       userID:user_id
     }
 
-    
-
 
   }catch(error){
     console.log(error);
