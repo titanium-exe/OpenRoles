@@ -122,10 +122,11 @@ export const updateProfile = async (req, res) => {
     const file = req.file;
 
     // cloudinary comes here
-
-    const skillsArray = skills.split(",");
+    
+    // check skills if exists -> split 
+    const skillsArray = skills ? skills.split(",") : [];
     const userId = req.id; // form the middleware authentication
-    let user = await user.findById(userId);
+    let user = await User.findById(userId);
 
     if (!user) {
       return res.status(400).json({
