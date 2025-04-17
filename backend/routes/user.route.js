@@ -1,7 +1,5 @@
 import express from "express";
-import { register } from "../controllers/user.controller.js";
-import { login } from "../controllers/user.controller.js";
-import { updateProfile } from "../controllers/user.controller.js";
+import { login, logout, register, updateProfile } from "../controllers/user.controller.js";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
 
 

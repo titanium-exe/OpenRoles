@@ -76,7 +76,7 @@ export const login = async (req, res) => {
     };
 
     const tokenData = {
-      userID: user_id
+      userId: user._id
     }
 
     const token = await jwt.sign(tokenData, process.env.SECRET_KEY, { expiresIn: '1d' });
@@ -120,13 +120,6 @@ export const updateProfile = async (req, res) => {
 
     const { fullname, email, phoneNumber, bio, skills } = req.body;
     const file = req.file;
-    if (!fullname || !email || !phoneNumber || !skills || !bio) {
-      return res.status(400).json({
-        message: "Something is missing",
-        success: false
-      });
-
-    };
 
     // cloudinary comes here
 
@@ -142,11 +135,12 @@ export const updateProfile = async (req, res) => {
     }
 
     // updating data 
-    user.fullname = fullname
-    user.email = email
-    user.phoneNumber = phoneNumber
-    user.profile.bio = bio
-    user.profile.skills = skillsArray
+    if (fullname) user.fullname = fullname
+    if (email) user.email = email
+    if (phoneNumber) user.phoneNumber = phoneNumber
+    if (bio) user.profile.bio = bio
+    if (skills) user.profile.skills = skillsArray
+
 
     // resume will be here
     await user.save();
