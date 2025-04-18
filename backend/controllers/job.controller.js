@@ -45,13 +45,16 @@ export const getAllJobs = async (req, res) => {
     const keyword = req.query.keyword || "";
     const query = {
       $or: [
-        { title: { regex: keyword, $options: "i" } },
+        { title: { $regex: keyword, $options: "i" } },
         { description: { $regex: keyword, $options: "i" } },
       ]
     };
     
+
     // I am comming back here 
-    const jobs = await job.find(query);
+    const jobs = await job.find(query).populate({
+      path: "company"
+    }).sort({ createdAt: -1 });
     if (!jobs) {
       return res.status(404).json({
         message: "Jobs not found",
@@ -61,7 +64,7 @@ export const getAllJobs = async (req, res) => {
 
     return res.status(200).json({
       jobs,
-      success:true
+      success: true
     });
 
   } catch (error) {
@@ -72,21 +75,21 @@ export const getAllJobs = async (req, res) => {
 
 // for job appliers 
 
-export const getJobById = async(req,res) =>{
+export const getJobById = async (req, res) => {
   try {
     const jobId = req.params.id;
     const job = await job.findById(jobId);
-    
-    if(!job){
+
+    if (!job) {
       return res.status(404).json({
-        message:"no job found",
-        success:true
+        message: "no job found",
+        success: true
       })
     };
 
     return res.status(200).json({
       job,
-      success:true
+      success: true
     });
 
 
@@ -97,23 +100,23 @@ export const getJobById = async(req,res) =>{
 
 
 // for job creators 
-export const getCreatedJobs = async (req,res) => {
+export const getCreatedJobs = async (req, res) => {
   try {
     const creatorId = req.id;
-    const jobs = await job.find({created_by: creatorId});
-    if(!jobs){
+    const jobs = await job.find({ created_by: creatorId });
+    if (!jobs) {
       return res.status(404).json({
-        message:"no job found",
-        success:true
+        message: "no job found",
+        success: true
       })
     }
 
     return res.status(200).json({
       jobs,
-      success:true
+      success: true
     })
 
-    
+
   } catch (error) {
     console.log(error);
   }
