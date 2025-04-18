@@ -3,10 +3,10 @@ import { Company } from "../models/company.model.js"
 export const registerCompany = async (req, res) => {
   try {
 
-    const { companyName } = req.body;
-    if (!companyName) {
+    const { companyName, location } = req.body;
+    if (!companyName || !location) {
       return res.status(400).json({
-        message: "company name is requires",
+        message: "company name or location is missing",
         success: false
       });
     };

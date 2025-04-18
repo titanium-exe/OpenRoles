@@ -6,6 +6,7 @@ import connectDB from "./utils/db.js";
 dotenv.config({});
 import userRoute from "./routes/user.route.js";
 import './controllers/user.controller.js';
+import companyRoute from "./routes/company.route.js";
 
 
 
@@ -32,6 +33,7 @@ app.get("/", (req, res) => {
 // api's 
 
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/company", companyRoute);
 
 
 app.listen(PORT, () => {
