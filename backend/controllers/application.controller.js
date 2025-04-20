@@ -1,4 +1,6 @@
-import { application } from "../models/application.model";
+import { application } from "../models/application.model.js";
+import { job } from "../models/job.model.js";
+
 
 export const applyJob = async (req, res) => {
   try {
@@ -37,8 +39,12 @@ export const applyJob = async (req, res) => {
       applicant: userId,
     })
 
-    job.applications.push(newApplication._id);
-    await job.save();
+    if (!thisJob.applications) {
+      thisJob.applications = [];
+    }
+    thisJob.applications.push(newApplication._id);
+    await thisJob.save();
+
     return res.status(201).json({
       message: "Job applied succesfuly",
       success: true
@@ -95,7 +101,7 @@ export const getApplicants = async (req, res) => {
       }
     });
 
-    if(!thisjob){
+    if (!thisjob) {
       return res.status(404).json({
         message: "Job not found",
         success: false
@@ -103,8 +109,8 @@ export const getApplicants = async (req, res) => {
     };
 
     return res.status(200).json({
-      job,
-      success:true
+      thisjob,
+      success: true
     });
 
   } catch (error) {
@@ -115,9 +121,9 @@ export const getApplicants = async (req, res) => {
 export const updateStatus = async (req, res) => {
   try {
 
-    const {status} = req.body;
+    const { status } = req.body;
     const applicationId = req.params.id;
-    if(!status){
+    if (!status) {
       return res.status(400).json({
         message: "Status is required",
         success: false
@@ -125,21 +131,21 @@ export const updateStatus = async (req, res) => {
     };
 
     // find the application by applicant ID 
-    const application_ = await application.findOne({_id:applicationId});
-    if(!application_){
+    const application_ = await application.findOne({ _id: applicationId });
+    if (!application_) {
       return res.status(400).json({
         message: "Application not found",
         success: false
       })
     };
-    
+
     // update the status 
     application_.status = status.toLowerCase();
     await application_.save();
 
     return res.status(200).json({
-      message:"Status Updated Successfuly",
-      success:true
+      message: "Status Updated Successfuly",
+      success: true
     })
 
   } catch (error) {
