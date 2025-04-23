@@ -1,6 +1,9 @@
 import { Popover, PopoverContent } from "@radix-ui/react-popover";
 import React from "react";
 import { Button } from "../ui/button";
+import { PopoverTrigger } from "@radix-ui/react-popover";
+import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import { LogOut, User2 } from "lucide-react";
 
 const Navbar = () => {
   return (
@@ -12,7 +15,7 @@ const Navbar = () => {
           </h1>
         </div>
 
-        <div>
+        <div className="flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5">
             <li>Home</li>
             <li>Jobs</li>
@@ -20,10 +23,40 @@ const Navbar = () => {
           </ul>
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline">Open popover</Button>
+              <Avatar className="cursor-pointer">
+                <AvatarImage
+                  src="https://github.com/shadcn.png"
+                  alt="@shadcn"
+                  className="h-11 w-11 rounded-full overflow-hidden"
+                />
+              </Avatar>
             </PopoverTrigger>
-            <PopoverContent>
-              <h1>Hello!</h1>
+            <PopoverContent className="w-80">
+              <div className="flex gap-3 space-y-2">
+                <Avatar className="cursor-pointer">
+                  <AvatarImage
+                    src="https://github.com/shadcn.png"
+                    alt="@shadcn"
+                    className="h-11 w-11 rounded-full overflow-hidden"
+                  />
+                </Avatar>
+                <div>
+                  <h4 className="font-medium">Ekamleen</h4>
+                  <p className="text-sm text-muted-foreground">
+                     She/Her/Hers
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col my-2 text-gray-500">
+                <div className="flex w-fit items-center gap-2 cursor-pointer">
+                  <User2/>
+                  <Button variant="link">View Profile</Button>
+                </div>
+                <div className="flex w-fit items-center gap-2 cursor-pointer">
+                  <LogOut/>
+                  <Button variant="link">Logout</Button>
+                </div>
+              </div>
             </PopoverContent>
           </Popover>
         </div>
