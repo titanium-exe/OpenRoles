@@ -44,6 +44,11 @@ const Signup = () => {
       formData.append("file", input.file);
     }
 
+    console.log("Form payload:", input);
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+    
     try {
       const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
         headers: {
