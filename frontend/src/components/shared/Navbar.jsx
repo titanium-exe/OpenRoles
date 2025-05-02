@@ -13,7 +13,7 @@ const Navbar = () => {
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
         <div>
           <h1 className="text-2xl font-bold">
-            Open<span className="text-[#367588]">Roles!</span>
+            Open<span className="text-[#1b5656]">Roles!</span>
           </h1>
         </div>
 
