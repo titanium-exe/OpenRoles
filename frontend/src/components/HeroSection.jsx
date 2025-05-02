@@ -13,10 +13,11 @@ const HeroSection = () => {
           Search, Apply & <br /> Get Your{" "}
           <span className="text-[#1b5656] ">Dream Job</span>
         </h1>
+        <p className="font-extralight">Find role that fits</p>
         <div className="flex w-[40%] shadow-lg border border-gray-200 pl-3 items-center gap-4 mx-auto rounded-md">
           <input
             type="text"
-            placeholder="Find role that fits"
+            placeholder="search"
             className="outline-none border-none w-full py-2 rounded-md"
           />
           <Button className='rounded-r-md'>
