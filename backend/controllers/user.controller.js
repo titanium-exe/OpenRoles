@@ -1,6 +1,8 @@
 import { User } from "../models/user.model.js";
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
+import getDataUri from "../utils/datauri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
   try {
@@ -122,7 +124,20 @@ export const updateProfile = async (req, res) => {
     const file = req.file;
 
     // cloudinary comes here
-    
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content,{
+      resource_type: "raw",
+      access_mode: "public",
+    },
+    (error, result) => {
+      if (error) {
+        console.error("Upload error", error);
+      } else {
+        console.log("Upload success", result.secure_url);
+      }
+    });
+
+  
     // check skills if exists -> split 
     const skillsArray = skills ? skills.split(",") : [];
     const userId = req.id; // form the middleware authentication
@@ -144,6 +159,13 @@ export const updateProfile = async (req, res) => {
 
 
     // resume will be here
+    if(cloudResponse){
+      user.profile.resume = cloudResponse.secure_url; // save the cloudinary url
+      user.profile.resumeOriginalName  = file.originalname; // save the original file name
+      console.log("Resume saved:", user.profile.resume, user.profile.resumeName);
+    }
+
+
     await user.save();
 
     user = {
