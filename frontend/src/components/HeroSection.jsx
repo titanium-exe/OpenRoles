@@ -6,12 +6,12 @@ const HeroSection = () => {
   return (
     <div className="text-center">
       <div className="flex flex-col gap-5 my-10">
-        <span className="px-4 py-2 mx-auto rounded-md bg-teal-900 text-[#ffffff] font-bold">
-          No. 1 Job Hunt Website
+        <span className="px-4 py-2 mx-auto rounded-md bg-teal-900 text-[#ffffff] font-semibold">
+          #1 Tech Jobs Platform
         </span>
         <h1 className="text-5xl font-bold">
-          Search, Apply & <br /> Get Your{" "}
-          <span className="text-[#1b5656] ">Dream Job</span>
+        One Platform. <br /> 
+          <span className="text-[#1b5656] ">Every Opportunity.</span>
         </h1>
         <p className="font-extralight">Find role that fits</p>
         <div className="flex w-[40%] shadow-lg border border-gray-200 pl-3 items-center gap-4 mx-auto rounded-md">
