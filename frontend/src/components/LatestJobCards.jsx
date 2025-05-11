@@ -1,35 +1,31 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 
-const LatestJobCards = () => {
+const LatestJobCards = ({ job }) => {
   return (
-    <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100">
+    <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100 space-y-3">
+      {/* Company Info */}
       <div>
-        <h1 className="font-medium text-lg">Company Name</h1>
-        <p className="text-sm text-gray-500">Canada</p>
+        <h1 className="font-medium text-lg">{job?.company?.name}</h1>
+        <p className="text-sm text-gray-500">{job?.location}</p>
       </div>
+
+      {/* Job Title & Description */}
       <div>
-        <h1 className="font-bold text-lg my-2">Job Title</h1>
-        <p className="text-sm text-gray-600">Job description comes here, Click for more</p>
+        <h2 className="font-bold text-xl">{job?.title}</h2>
+        <p className="text-sm text-gray-600 line-clamp-3">{job?.description}</p>
       </div>
-      <div className="flex items-center gap-2 mt-4">
-        <Badge
-          className={"rounded-md text-[] bg-[#f3f3f3] font-light"}
-          variant="ghost"
-        >
-          5 Positions
+
+      {/* Tags */}
+      <div className="flex flex-wrap items-center gap-2 mt-2">
+        <Badge className="rounded-md bg-[#f3f3f3] font-light" variant="ghost">
+          {job?.position}
         </Badge>
-        <Badge
-          className={"rounded-md text-[] bg-[#f3f3f3] font-light"}
-          variant="ghost"
-        >
-          Part-time
+        <Badge className="rounded-md bg-[#f3f3f3] font-light" variant="ghost">
+          {job?.jobType}
         </Badge>
-        <Badge
-          className={"rounded-md text-[] bg-[#f3f3f3] font-light"}
-          variant="ghost"
-        >
-          Remote
+        <Badge className="rounded-md bg-[#f3f3f3] font-light" variant="ghost">
+          ${job?.salary}k
         </Badge>
       </div>
     </div>
