@@ -6,6 +6,7 @@ import axios from "axios";
 import {  APPLICATION_API_END_POINT, JOB_API_POINT } from "@/utils/constant";
 import { setSingleJob } from "@/redux/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const JobDescription = () => {
   const params = useParams();
@@ -13,12 +14,17 @@ const JobDescription = () => {
   const dispatch = useDispatch();
   const { singleJob } = useSelector((store) => store.job);
   const {user} = useSelector(store=>store.auth);
-  const isApplied = singleJob?.applications?.some(application => application.applicant == user?._id) || false; 
+  const initApplied = singleJob?.applications?.some(application => application.applicant == user?._id) || false; 
+  const[isApplied, setIsApplied] = useState(initApplied);
+  
   const applyJobHandler  = async () =>{
       try {
-        const res = await axios.get(`${APPLICATION_API_END_POINT}/apply/${jobId}`);
+        const res = await axios.get(`${APPLICATION_API_END_POINT}/apply/${jobId}`, {withCredentials:true});
 
         if(res.data.success){
+          setIsApplied(true); // updating the local state.
+          const updateSingleJob = {...singleJob, applications:[...singleJob.applications, {applicant:user?._id}]};
+          dispatch(setSingleJob(updateSingleJob)); // for real time UI update
           toast.success(res.data.message);
         }
         
@@ -35,6 +41,7 @@ const JobDescription = () => {
   
         if (res.data.success) {
           dispatch(setSingleJob(res.data.job_));
+          setIsApplied(res.data.job_.applications.some(application=>application.applicant == user?._id));
         } else {
           console.warn("API call succeeded but no job data returned.");
         }
@@ -73,6 +80,7 @@ const JobDescription = () => {
           </div>
         </div>
         <Button
+          onClick={isApplied ? null : applyJobHandler}
           disabled={isApplied}
           className={`rounded-lg text-white ${
             isApplied
