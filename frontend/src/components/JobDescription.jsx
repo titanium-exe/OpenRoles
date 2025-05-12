@@ -3,33 +3,48 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import {  JOB_API_POINT } from "@/utils/constant";
+import {  APPLICATION_API_END_POINT, JOB_API_POINT } from "@/utils/constant";
 import { setSingleJob } from "@/redux/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const JobDescription = () => {
-  const isApplied = true;
   const params = useParams();
   const jobId = params.id;
   const dispatch = useDispatch();
   const { singleJob } = useSelector((store) => store.job);
   const {user} = useSelector(store=>store.auth);
+  const isApplied = singleJob?.applications?.some(application => application.applicant == user?._id) || false; 
+  const applyJobHandler  = async () =>{
+      try {
+        const res = await axios.get(`${APPLICATION_API_END_POINT}/apply/${jobId}`);
 
+        if(res.data.success){
+          toast.success(res.data.message);
+        }
+        
+      } catch (error) {
+        console.log(error)
+        toast.error(error.response.data.message);
+      }
+  }
   useEffect(() => {
     const fetchSingleJob = async () => {
       try {
-        const res = await axios.get(`${JOB_API_POINT}/get/${jobId}`, {
-          withCredentials: true,
-        });
+        const url = `${JOB_API_POINT}/get/${jobId}`;
+        const res = await axios.get(url, { withCredentials: true });
+  
         if (res.data.success) {
-          dispatch(setSingleJob(res.data.job));
+          dispatch(setSingleJob(res.data.job_));
+        } else {
+          console.warn("API call succeeded but no job data returned.");
         }
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching job:", error);
       }
     };
     fetchSingleJob();
   }, [jobId, dispatch, user?._id]);
+  
 
   return (
     <div className="max-w-7xl mx-auto my-10">
@@ -93,7 +108,7 @@ const JobDescription = () => {
         <h1 className="font-bold my-1">
           Experience:
           <span className="pl-4 font-normal text-gray-800">
-            {singleJob?.experience}
+            {singleJob?.experienceLevel}
           </span>
         </h1>
         <h1 className="font-bold my-1">
@@ -105,12 +120,12 @@ const JobDescription = () => {
         <h1 className="font-bold my-1">
           Total Applicants:
           <span className="pl-4 font-normal text-gray-800">
-            {singleJob?.position}
+            {singleJob?.applications?.length}
           </span>
         </h1>
         <h1 className="font-bold my-1">
           Posted Date:
-          <span className="pl-4 font-normal text-gray-800">5-05-2025</span>
+          <span className="pl-4 font-normal text-gray-800">{singleJob?.createdAt.split("T")[0]}</span>
         </h1>
       </div>
     </div>
