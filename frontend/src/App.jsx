@@ -12,7 +12,7 @@ import Profile from "./components/Profile";
 import JobDescription from "./components/JobDescription";
 import Companies from "./components/admin/Companies";
 import CreateCompany from "./components/admin/CreateCompany";
-
+import CompanyProfile from "./components/admin/CompanyProfile";
 
 
 const appRouter = createBrowserRouter([
@@ -61,8 +61,9 @@ const appRouter = createBrowserRouter([
 
   {
     path:"admin/companies/:id",
-    element:<CreateCompany/>
-  }
+    element:<CompanyProfile/>
+  },
+
 
 
 ]);
