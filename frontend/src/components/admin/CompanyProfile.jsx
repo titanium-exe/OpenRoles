@@ -7,6 +7,8 @@ import { Input } from "../ui/input";
 import axios from "axios";
 import { COMPANY_API_END_POINT } from "@/utils/constant";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner"; 
+import { useSelector } from "react-redux";
 
 const CompanyProfile = () => {
   const [input, setInput] = useState({
@@ -16,6 +18,8 @@ const CompanyProfile = () => {
     location: "",
     file: null,
   });
+
+  const {singleCompany} = useSelector(store=>store.company);
 
   const [loading, setLoading] = useState(false);
   const params = useParams();
@@ -68,6 +72,18 @@ const CompanyProfile = () => {
     }
   };
 
+  useEffect(() => {
+    setInput({
+
+    name: singleCompany.name || "",
+    description: singleCompany.description|| "",
+    website: singleCompany.website|| "",
+    location:singleCompany.location ||  "",
+    file: singleCompany.file || null,
+
+    })
+  }, [singleCompany]);
+
   return (
     <div>
       <Navbar />
@@ -75,6 +91,7 @@ const CompanyProfile = () => {
         <form onSubmit={submitHandler}>
           <div className="flex items-center  gap-7 padding-8">
             <Button
+             onClick={() => navigate("/admin/companies")}
               className="flex items-center gap-2 text-gray-500 font-semibold"
               variant="outline"
             >
@@ -128,9 +145,16 @@ const CompanyProfile = () => {
               onChange={changeFileHandler}
             />
           </div>
-          <Button type="submit" className="w-full mt-8">
-            Update
-          </Button>
+          {loading ? (
+            <Button className="w-full my-4">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            </Button>
+          ) : (
+            <Button type="submit" className="w-full my-4">
+              Update
+            </Button>
+          )}
+          
         </form>
       </div>
     </div>

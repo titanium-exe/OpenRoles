@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Navbar from "../shared/Navbar";
-import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
@@ -13,18 +12,20 @@ import { setSingleCompany } from "@/redux/companySlice";
 const CreateCompany = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = "canada";
 
-  const [companyName, setCompanyName] = useState();
+
+  const [companyName, setCompanyName] = useState('');
+  const token = localStorage.getItem("token");
 
   const registerNewCompany = async () => {
     try {
       const res = await axios.post(
         `${COMPANY_API_END_POINT}/register`,
-        { companyName , location},
+        { companyName},
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
           },
           withCredentials: true,
         }
