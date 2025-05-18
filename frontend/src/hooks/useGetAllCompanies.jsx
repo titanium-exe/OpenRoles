@@ -8,7 +8,6 @@ const useGetAllCompanies = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!companyId) return;
 
     const fetchCompany = async () => {
       try {
