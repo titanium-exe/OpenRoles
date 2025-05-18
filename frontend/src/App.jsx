@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./App.css";
-import Navbar from "./components/shared/Navbar";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
@@ -13,6 +12,7 @@ import JobDescription from "./components/JobDescription";
 import Companies from "./components/admin/Companies";
 import CreateCompany from "./components/admin/CreateCompany";
 import CompanyProfile from "./components/admin/CompanyProfile";
+import AdminJobs from "./components/admin/AdminJobs";
 
 
 const appRouter = createBrowserRouter([
@@ -64,6 +64,12 @@ const appRouter = createBrowserRouter([
     element:<CompanyProfile/>
   },
 
+  // 
+  
+  {
+    path:"admin/jobs/",
+    element:<AdminJobs/>
+  },
 
 
 ]);
