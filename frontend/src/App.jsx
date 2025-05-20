@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./App.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./components/auth/Login";
@@ -13,6 +12,7 @@ import Companies from "./components/admin/Companies";
 import CreateCompany from "./components/admin/CreateCompany";
 import CompanyProfile from "./components/admin/CompanyProfile";
 import AdminJobs from "./components/admin/AdminJobs";
+import PostJobs from "./components/admin/PostJobs";
 
 
 const appRouter = createBrowserRouter([
@@ -70,6 +70,12 @@ const appRouter = createBrowserRouter([
     path:"admin/jobs/",
     element:<AdminJobs/>
   },
+
+  {
+    path:"admin/jobs/post/",
+    element:<PostJobs />
+  },
+
 
 
 ]);
