@@ -46,7 +46,7 @@ const ApplicantsTable = () => {
             <TableHead>Email</TableHead>
             <TableHead>Contact</TableHead>
             <TableHead>Resume</TableHead>
-            <TableHead>Date</TableHead>
+            <TableHead>Date Posted</TableHead>
             <TableHead className="text-right">Action</TableHead>
           </TableRow>
         </TableHeader>

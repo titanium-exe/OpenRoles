@@ -4,15 +4,17 @@ import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { Contact, Mail, Pen, FileText } from "lucide-react";
 import { Badge } from "./ui/badge";
-import { Label } from "./ui/label";
 import AppliedJobsTable from "./AppliedJobsTable";
 import UpdateProfileDialog from "./UpdateProfileDialog";
 import { useSelector } from "react-redux";
+import useGetAllAppliedJobs from "@/hooks/useGetAllAppliedJobs";
 
 
 const hasResume = true;
 
 const Profile = () => {
+
+  useGetAllAppliedJobs();
 
   const [open, setOpen] = useState(false);
   const {user} = useSelector(store=> store.auth);
