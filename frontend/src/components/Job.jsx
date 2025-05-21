@@ -28,8 +28,7 @@ const Job = ({ job }) => {
       <div className="flex items-center gap-4 my-4">
         <Avatar>
           <AvatarImage
-            src="https://cdn.iconscout.com/icon/premium/png-512-thumb/job-search-11676412-9520638.png?f=webp&w=512"
-            className="h-12 w-12 object-contain"
+            src={job?.company?.logo}
           />
         </Avatar>
 
