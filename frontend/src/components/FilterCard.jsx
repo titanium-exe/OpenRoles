@@ -18,11 +18,17 @@ const fitlerData = [
 ];
 
 const FilterCard = () => {
+  
+  const [selectedValue, setSelectedValue] = useState('');
+  const changeHandler = (value) => {
+    setSelectedValue(value);
+  }
+
   return (
     <div>
       <h1>Filter Jobs</h1>
       <hr className="mt-3" />
-      <RadioGroup>
+      <RadioGroup value={selectedValue} onValueChange={changeHandler}>
         {fitlerData.map((data, index) => (
           <div>
             <h1 className="font-bold text-lg">{data.fitlerType}</h1>
